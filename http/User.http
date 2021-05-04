@@ -1,0 +1,25 @@
+### Register
+POST {{chat}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "anton",
+  "email": "anton.name@gmail.com",
+  "password": "123456",
+  "role": ["ROLE_USER"]
+}
+
+
+### Login
+POST {{chat}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "anton",
+  "password": "123456"
+}
+
+
+### Get user by id
+GET {{chat}}/api/user?id=1
+Authorization: {{BEARER}}

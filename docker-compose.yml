@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+
+  db:
+    hostname: mysql-chat-db
+    image: mysql:latest
+    restart: always
+    volumes:
+      - ./data/mysql/init:/data/application/init.sql
+    environment:
+      MYSQL_DATABASE: 'chat'
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
