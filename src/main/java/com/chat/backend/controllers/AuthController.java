@@ -59,7 +59,7 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-		Authentication authentication = authenticationManager.authenticate(
+		var authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -70,13 +70,11 @@ public class AuthController {
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(JwtResponse.builder()
-				.id(userDetails.getId())
-				.token(jwt)
-				.username(userDetails.getUsername())
-				.email(userDetails.getEmail())
-				.roles(roles)
-				.build());
+		return ResponseEntity.ok(new JwtResponse(jwt,
+				userDetails.getId(),
+				userDetails.getUsername(),
+				userDetails.getEmail(),
+				roles));
 	}
 
 	@PostMapping("/signup")
@@ -97,24 +95,24 @@ public class AuthController {
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+			var userRole = roleRepository.findByName(ERole.ROLE_USER)
 					.orElseThrow(() -> new RuntimeException(ROLE_IS_NOT_FOUND_ERROR_MESSAGE));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				if ( ERole.ROLE_ADMIN.name().equals(role)) {
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+					var adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException(ROLE_IS_NOT_FOUND_ERROR_MESSAGE));
 					roles.add(adminRole);
 				} else {
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+					var userRole = roleRepository.findByName(ERole.ROLE_USER)
 							.orElseThrow(() -> new RuntimeException(ROLE_IS_NOT_FOUND_ERROR_MESSAGE));
 					roles.add(userRole);
 				}
 			});
 		}
 
-		User user = User.builder()
+		var user = User.builder()
 				.username(signUpRequest.getUsername())
 				.email(signUpRequest.getEmail())
 				.password(encoder.encode(signUpRequest.getPassword()))
