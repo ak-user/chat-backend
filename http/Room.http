@@ -1,0 +1,23 @@
+
+### Create a room
+POST {{chat}}/api/room/create
+Authorization: {{BEARER}}
+Content-Type: application/json
+
+{
+  "name": "First room",
+  "connections": [1]
+}
+
+### Get all rooms
+GET {{chat}}/api/room/all?userId=1
+Authorization: {{BEARER}}
+
+### Get room by id
+GET {{chat}}/api/room?id=1
+Authorization: {{BEARER}}
+
+
+### Delete room by id
+DELETE {{chat}}/api/room?id=1
+Authorization: {{BEARER}}

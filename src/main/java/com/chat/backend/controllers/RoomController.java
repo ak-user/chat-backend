@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -32,12 +33,19 @@ public class RoomController {
 
 		roomRequest.getConnections().forEach(userId -> connections.add(userService.findById(userId)));
 
-		Room room = Room.builder()
+		var room = Room.builder()
 				.name(roomRequest.getName())
 				.connections(connections)
 				.build();
 
 		return roomService.save(room);
+	}
+
+	@GetMapping("/all")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	public List<Room> getAllRoomsByUserId(@RequestParam Long userId) {
+		User user = userService.findById(userId);
+		return roomService.findAllRoomsByUser(user);
 	}
 
 	@GetMapping

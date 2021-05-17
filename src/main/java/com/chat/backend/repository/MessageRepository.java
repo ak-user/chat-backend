@@ -1,7 +1,6 @@
 package com.chat.backend.repository;
 
-import com.chat.backend.models.Room;
-import com.chat.backend.models.User;
+import com.chat.backend.models.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Long> {
+public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    Optional<List<Room>> findAllByConnections(User user);
+    Optional<List<Message>> findAllByRoomId(Long id);
 
 }
