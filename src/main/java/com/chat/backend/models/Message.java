@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,11 +21,15 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
-	private Long userId;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "UserId", nullable = false)
+	private User user;
 
-	@NotBlank
-	private Long roomId;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "RoomId", nullable = false)
+	private Room room;
 
 	private String text;
 

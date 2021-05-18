@@ -2,6 +2,7 @@ package com.chat.backend.service;
 
 import com.chat.backend.controllers.NotFoundException;
 import com.chat.backend.models.Message;
+import com.chat.backend.models.Room;
 import com.chat.backend.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class MessageService {
          return messageRepository.save(message);
     }
 
-    public List<Message> findAllMessagesByRoomId(Long id) {
-        Optional<List<Message>> optionalMessages = messageRepository.findAllByRoomId(id);
+    public List<Message> findAllMessagesByRoom(Room room) {
+        Optional<List<Message>> optionalMessages = messageRepository.findAllByRoom(room);
 
         if (optionalMessages.isPresent()) {
             return optionalMessages.get();

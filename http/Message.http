@@ -10,10 +10,10 @@ Content-Type: application/json
   "text": "First text message"
 }
 
-### Get all rooms
-GET {{chat}}/api/room/all?roomId=1
+### Get all messages
+GET {{chat}}/api/message/all?roomId=1
 Authorization: {{BEARER}}
 
-### Delete room by id
-DELETE {{chat}}/api/room?id=1
+### Delete message by id
+DELETE {{chat}}/api/message?id=1
 Authorization: {{BEARER}}
